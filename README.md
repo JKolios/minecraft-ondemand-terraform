@@ -3,14 +3,29 @@
 Terraform implementation of https://github.com/doctorray117/minecraft-ondemand 
 
 ## Prerequisites
-* Developed on Terraform 1.0 (Terraform 0.13 and later likely to work, untested)
-* A domain under your control, DNS servers must be settable
+* Terraform 1.0 (Terraform 0.13 and later likely to work, untested). The guide assumes you have basic knowledge of Terraform.
+* A domain under your control, DNS servers must be changeable
 * An AWS account that you have admin access over
+* Optionally, an email address to receive "Server started" and "Server Stopped" notifications
 
 ## Running
 
-TODO
+Set up authentication with your AWS account using your preferred method from this doc: [Authentication](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication) Using the *Static Credentials* method requires changing the `provider` stanza in `terraform/provider.tf`.
+
+From the `terraform` directory, run `terraform plan` and `terraform apply`. You have to provide values to the following vars:
+* `domain_name` : The domain your server will run under
+* `sns_notification_email` : The email address where you will receive notifications
+You can input these from the command line or [through a tfvars file](https://www.terraform.io/docs/language/values/variables.html#variable-definitions-tfvars-files).
+
+Note the `hosted_zone_nameservers` output from `terraform apply`. Apply these DNS server addresses to your domain.
+
+Your `sns_notification_email` should have received a confirmation email from AWS. Follow the link in it to enable email notifications.
+
+If everything worked correctly, trying to resolve `minecraft.DOMAIN_NAME` should start the server. This might take 5-10 minutes on the first run. The server should then be reachable at `minecraft.DOMAIN_NAME`.
 
 ## Caveats
 
-Twilio SMS notifications are not supported.
+* Limited testing done so far.
+* Limited to the `us-east-1` AWS region, other regions will most likely fail.
+* Twilio SMS notifications are not supported.
+* At this time `terraform destroy` is not guaranteed to work cleanly in a reliable manner.

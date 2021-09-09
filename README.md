@@ -1,4 +1,4 @@
-# minecraft-ondemand
+# minecraft-ondemand-terraform
 
 Terraform implementation of https://github.com/doctorray117/minecraft-ondemand 
 

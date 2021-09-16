@@ -3,14 +3,14 @@
 Terraform implementation of https://github.com/doctorray117/minecraft-ondemand 
 
 ## Prerequisites
-* Terraform 1.0 (Terraform 0.13 and later likely to work, untested). The guide assumes you have basic knowledge of Terraform.
+* Terraform 1.0 (Terraform 0.13 and later likely to work, untested). This README assumes you have basic knowledge of Terraform.
 * A domain under your control, DNS servers must be changeable
 * An AWS account that you have admin access over
 * Optionally, an email address to receive "Server started" and "Server Stopped" notifications
 
 ## Running
 
-Set up authentication with your AWS account using your preferred method from this doc: [Authentication](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication) Using the *Static Credentials* method requires changing the `provider` stanza in `terraform/provider.tf`.
+Set up authentication with your AWS account using your preferred method from this doc: [Authentication](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication) Using the *Static Credentials* method requires changing the `provider` definition in `terraform/provider.tf`.
 
 From the `terraform` directory, run `terraform plan` and `terraform apply`. You have to provide values to the following vars:
 * `domain_name` : The domain your server will run under
@@ -21,7 +21,7 @@ Note the `hosted_zone_nameservers` output from `terraform apply`. Apply these DN
 
 Your `sns_notification_email` should have received a confirmation email from AWS. Follow the link in it to enable email notifications.
 
-If everything worked correctly, trying to resolve `minecraft.DOMAIN_NAME` should start the server. This might take 5-10 minutes on the first run. The server should then be reachable at `minecraft.DOMAIN_NAME`.
+If everything worked correctly, trying to resolve `minecraft.${DOMAIN_NAME}` should start the server. This might take 5-10 minutes on the first run. The server should then be reachable at `minecraft.${DOMAIN_NAME}`.
 
 ## Caveats
 

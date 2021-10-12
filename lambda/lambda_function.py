@@ -3,7 +3,7 @@ import boto3
 
 def lambda_handler(event, context):
 
-  ecs = boto3.client('ecs', region_name='us-east-1')
+  ecs = boto3.client('ecs', region_name="${aws_region}")
   response = ecs.describe_services(
     cluster='minecraft',
     services=[

@@ -1,10 +1,14 @@
 data "archive_file" "ondemand_minecraft_task_starter_lambda_zip" {
-  type        = "zip"
-  source_file = "../lambda/lambda_function.py"
-  output_path = "lambda_function.zip"
+  type                    = "zip"
+  source_content          = templatefile("../lambda/lambda_function.py", {
+    aws_region = var.aws_region
+  })
+  source_content_filename = "lambda_function.py"
+  output_path             = "lambda_function.zip"
 }
 
 resource "aws_lambda_function" "ondemand_minecraft_task_starter_lambda" {
+  provider          = aws.us-east-1
   depends_on = [
     aws_cloudwatch_log_group.lambda_function_log_group
   ]
@@ -18,9 +22,10 @@ resource "aws_lambda_function" "ondemand_minecraft_task_starter_lambda" {
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
+  provider      = aws.us-east-1
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.ondemand_minecraft_task_starter_lambda.function_name
-  principal     = format("logs.%s.amazonaws.com", var.aws_region)
+  principal     = "logs.us-east-1.amazonaws.com"
   source_arn    = format("%s:*", aws_cloudwatch_log_group.aws_route53_hosted_zone_log_group.arn)
 }

@@ -13,6 +13,8 @@ Terraform implementation of https://github.com/doctorray117/minecraft-ondemand
 Set up authentication with your AWS account using your preferred method from this doc: [Authentication](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication) Using the *Static Credentials* method requires changing the `provider` definition in `terraform/provider.tf`.
 
 From the `terraform` directory, run `terraform plan` and `terraform apply`. You have to provide values to the following vars:
+* `aws_region`: The AWS region to deploy the Minecraft server in
+* `domain_name` : The domain your server will run under
 * `domain_name` : The domain your server will run under
 * `sns_notification_email` : The email address where you will receive notifications
 You can input these from the command line or [through a tfvars file](https://www.terraform.io/docs/language/values/variables.html#variable-definitions-tfvars-files).
@@ -26,6 +28,5 @@ If everything worked correctly, trying to resolve `minecraft.${DOMAIN_NAME}` sho
 ## Caveats
 
 * Limited testing done so far.
-* Limited to the `us-east-1` AWS region, other regions will most likely fail.
 * Twilio SMS notifications are not supported.
 * At this time `terraform destroy` is not guaranteed to work cleanly in a reliable manner.

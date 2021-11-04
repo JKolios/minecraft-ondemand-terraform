@@ -1,6 +1,6 @@
 data "archive_file" "ondemand_minecraft_task_starter_lambda_zip" {
-  type                    = "zip"
-  source_content          = templatefile("../lambda/lambda_function.py", {
+  type = "zip"
+  source_content = templatefile("../lambda/lambda_function.py", {
     aws_region = var.aws_region
   })
   source_content_filename = "lambda_function.py"
@@ -8,7 +8,7 @@ data "archive_file" "ondemand_minecraft_task_starter_lambda_zip" {
 }
 
 resource "aws_lambda_function" "ondemand_minecraft_task_starter_lambda" {
-  provider          = aws.us-east-1
+  provider = aws.us-east-1
   depends_on = [
     aws_cloudwatch_log_group.lambda_function_log_group
   ]

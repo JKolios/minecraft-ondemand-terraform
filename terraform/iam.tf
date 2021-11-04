@@ -116,14 +116,14 @@ resource "aws_iam_policy" "minecraft_ondemand_ecs_exec_policy" {
     "Version" : "2012-10-17",
     "Statement" : [
       {
-        "Effect": "Allow",
-        "Action": [
+        "Effect" : "Allow",
+        "Action" : [
           "ssmmessages:CreateControlChannel",
           "ssmmessages:CreateDataChannel",
           "ssmmessages:OpenControlChannel",
           "ssmmessages:OpenDataChannel"
         ],
-        "Resource": "*"
+        "Resource" : "*"
       }
     ]
   })

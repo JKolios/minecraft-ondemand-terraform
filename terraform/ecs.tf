@@ -106,7 +106,7 @@ resource "aws_ecs_service" "minecraft_ondemand_service" {
   task_definition = aws_ecs_task_definition.minecraft_ondemand_task.arn
   desired_count   = 0
   #   iam_role        = aws_iam_role.minecraft_ondemand_fargate_task_role.arn
-  depends_on = [aws_iam_policy.minecraft_ondemand_efs_access_policy]
+  depends_on             = [aws_iam_policy.minecraft_ondemand_efs_access_policy]
   enable_execute_command = true
 
   capacity_provider_strategy {

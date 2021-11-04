@@ -6,18 +6,18 @@ resource "aws_datasync_location_s3" "backup" {
     bucket_access_role_arn = aws_iam_role.backup.arn
   }
 
-  tags             = var.common_tags
+  tags = var.common_tags
 }
 
 resource "aws_datasync_location_efs" "minecraft_ondemand_efs" {
   efs_file_system_arn = aws_efs_file_system.minecraft_ondemand_efs.arn
-  subdirectory  = "/minecraft"
+  subdirectory        = "/minecraft"
   ec2_config {
-    subnet_arn = aws_default_subnet.default_az1.arn
+    subnet_arn          = aws_default_subnet.default_az1.arn
     security_group_arns = [aws_security_group.allow_minecraft_server_port.arn]
   }
 
-  tags             = var.common_tags
+  tags = var.common_tags
 }
 
 resource "aws_datasync_task" "backup-create" {
@@ -26,7 +26,7 @@ resource "aws_datasync_task" "backup-create" {
   source_location_arn      = aws_datasync_location_efs.minecraft_ondemand_efs.arn
 
   schedule {
-    schedule_expression    = "cron(0 8 * * ? *)"
+    schedule_expression = "cron(0 8 * * ? *)"
   }
   options {
     atime                  = "BEST_EFFORT"
@@ -43,7 +43,7 @@ resource "aws_datasync_task" "backup-create" {
     uid                    = "INT_VALUE"
     verify_mode            = "ONLY_FILES_TRANSFERRED"
   }
-  tags                     = var.common_tags
+  tags = var.common_tags
 }
 
 resource "aws_datasync_task" "backup-restore" {
@@ -65,5 +65,5 @@ resource "aws_datasync_task" "backup-restore" {
     uid                    = "NONE"
     verify_mode            = "ONLY_FILES_TRANSFERRED"
   }
-  tags                     = var.common_tags
+  tags = var.common_tags
 }
